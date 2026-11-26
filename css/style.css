@@ -261,7 +261,24 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 .service h3 { margin: 10px 0 12px; }
 .service > p { font-size: 0.94em; }
 .service__label { display: block; margin-top: 22px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
-.service ul { list-style: none; padding: 0; margin: 10px 0 0; border-top: 1px solid var(--line); }
+/* Deliverables sit behind a button and drop down when it is pressed */
+.service__more { margin-top: 22px; }
+.service__more summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  padding: 0.85em 1.2em;
+  border: 1px solid var(--green); border-radius: 999px;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  transition: background 0.25s, color 0.25s;
+}
+.service__more summary::-webkit-details-marker { display: none; }
+.service__more summary::after { content: "+"; margin-left: auto; font-size: 1.15rem; font-weight: 300; line-height: 0.6; letter-spacing: 0; transition: transform 0.3s; }
+.service__more summary:hover, .service__more[open] summary { background: var(--green); color: var(--mist); }
+.service__more[open] summary::after { transform: rotate(45deg); }
+.service__count { font-weight: 300; letter-spacing: 0.08em; opacity: 0.7; }
+.service__more ul { animation: service-drop 0.35s ease; }
+@keyframes service-drop { from { opacity: 0; transform: translateY(-8px); } }
+.service ul { list-style: none; padding: 0; margin: 12px 0 0; border-top: 1px solid var(--line); }
 .service li { padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 0.9em; line-height: 1.45; }
 .service__facts { margin: auto 0 0; padding-top: 24px; display: grid; gap: 10px; }
 .service__facts div { background: var(--mist); border-radius: var(--radius); padding: 14px 16px; }
@@ -452,6 +469,7 @@ fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .ticker__track { animation: none; }
   .card__media img, .service img { transition: none; }
+  .service__more ul { animation: none; }
 }
 
 /* button inside the dark confirmation panel on the inquiry form */
