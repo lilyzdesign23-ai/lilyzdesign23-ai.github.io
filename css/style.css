@@ -433,6 +433,8 @@ fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
 .chips span { display: inline-block; padding: 0.55em 1.1em; border: 1px solid var(--line); border-radius: 999px; transition: background 0.2s, color 0.2s, border-color 0.2s; }
 .chips input:checked + span { background: var(--green); border-color: var(--green); color: var(--mist); }
 .chips input:focus-visible + span { outline: 2px solid var(--green); outline-offset: 3px; }
+.other-input { margin-top: 14px; }
+.other-input[hidden] { display: none; }
 .form__note { grid-column: 1 / -1; font-size: 0.9rem; color: var(--muted); }
 .form__result { grid-column: 1 / -1; padding: 24px; border-radius: var(--radius); background: var(--green); color: var(--mist); }
 .form__result[hidden] { display: none; }
