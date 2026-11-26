@@ -261,27 +261,48 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 .service h3 { margin: 10px 0 12px; }
 .service > p { font-size: 0.94em; }
 .service__label { display: block; margin-top: 22px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
-/* Deliverables sit behind a button and drop down when it is pressed */
-.service__more { margin-top: 22px; }
-.service__more summary {
+/* Deliverables and pricing sit behind tabs that drop down when pressed */
+.service__tabs { margin-top: auto; padding-top: 24px; display: grid; gap: 10px; }
+.service__tab { background: var(--mist); border-radius: 8px; overflow: hidden; }
+.service__tab summary {
   list-style: none; cursor: pointer;
   display: flex; align-items: center; gap: 10px;
-  padding: 0.85em 1.2em;
-  border: 1px solid var(--green); border-radius: 999px;
-  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  min-height: 58px; padding: 12px 14px 12px 18px;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.3;
   transition: background 0.25s, color 0.25s;
 }
-.service__more summary::-webkit-details-marker { display: none; }
-.service__more summary::after { content: "+"; margin-left: auto; font-size: 1.15rem; font-weight: 300; line-height: 0.6; letter-spacing: 0; transition: transform 0.3s; }
-.service__more summary:hover, .service__more[open] summary { background: var(--green); color: var(--mist); }
-.service__more[open] summary::after { transform: rotate(45deg); }
-.service__count { font-weight: 300; letter-spacing: 0.08em; opacity: 0.7; }
-.service__more ul { animation: service-drop 0.35s ease; }
+.service__tab summary::-webkit-details-marker { display: none; }
+.service__tab summary::marker { content: ""; }
+.service__tab summary:hover, .service__tab[open] summary { background: var(--green); color: var(--mist); }
+.service__count {
+  font-size: 0.72rem; letter-spacing: 0; line-height: 1;
+  padding: 4px 8px; border-radius: 999px; border: 1px solid currentColor; opacity: 0.75;
+}
+/* Large chevron in a circle, so the tab clearly reads as something to press */
+.service__chev {
+  margin-left: auto; flex-shrink: 0;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--green); position: relative;
+  transition: background 0.25s, transform 0.3s;
+}
+.service__chev::before {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: 10px; height: 10px; margin: -8px 0 0 -6px;
+  border-right: 2px solid var(--mist); border-bottom: 2px solid var(--mist);
+  transform: rotate(45deg); transition: border-color 0.25s;
+}
+.service__tab summary:hover .service__chev, .service__tab[open] .service__chev { background: var(--mist); }
+.service__tab summary:hover .service__chev::before, .service__tab[open] .service__chev::before { border-color: var(--green); }
+.service__tab[open] .service__chev { transform: rotate(180deg); }
+.service__tab > ul, .service__tab > dl { animation: service-drop 0.35s ease; }
 @keyframes service-drop { from { opacity: 0; transform: translateY(-8px); } }
+.service .service__tab > ul { margin: 0; padding: 4px 18px 10px; border-top: 0; }
+.service .service__tab > ul li:last-child { border-bottom: 0; }
 .service ul { list-style: none; padding: 0; margin: 12px 0 0; border-top: 1px solid var(--line); }
 .service li { padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 0.9em; line-height: 1.45; }
-.service__facts { margin: auto 0 0; padding-top: 24px; display: grid; gap: 10px; }
-.service__facts div { background: var(--mist); border-radius: var(--radius); padding: 14px 16px; }
+.service__facts { margin: 0; padding: 6px 18px 12px; display: grid; gap: 0; }
+.service__facts div { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.service__facts div:last-child { border-bottom: 0; }
 .service__facts dt { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
 .service__facts dd { margin: 4px 0 0; font-weight: 500; font-size: 1.05rem; line-height: 1.3; }
 .service__facts small { display: block; margin-top: 4px; font-weight: 300; font-size: 0.78rem; color: var(--muted); }
@@ -469,7 +490,8 @@ fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .ticker__track { animation: none; }
   .card__media img, .service img { transition: none; }
-  .service__more ul { animation: none; }
+  .service__tab > ul, .service__tab > dl { animation: none; }
+  .service__chev { transition: none; }
 }
 
 /* button inside the dark confirmation panel on the inquiry form */
