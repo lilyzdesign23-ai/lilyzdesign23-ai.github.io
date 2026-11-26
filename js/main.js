@@ -2,7 +2,6 @@
 
 // The inquiry form posts into Lily's Google Form (the address is the form's action in inquire.html),
 // so every inquiry appears in that form's Responses tab.
-var INSTAGRAM_URL = "https://www.instagram.com/lilyzdesign/";
 
 (function () {
   var doc = document.documentElement;
@@ -117,9 +116,9 @@ var INSTAGRAM_URL = "https://www.instagram.com/lilyzdesign/";
       if (e.target.type === "radio") syncOther(e.target);
     });
 
-    function show(text, withInstagram) {
+    function show(text, withEmail) {
       resultText.textContent = text;
-      resultLink.style.display = withInstagram ? "" : "none";
+      resultLink.style.display = withEmail ? "" : "none";
       result.hidden = false;
       result.scrollIntoView({ block: "nearest", behavior: "smooth" });
     }
@@ -158,7 +157,7 @@ var INSTAGRAM_URL = "https://www.instagram.com/lilyzdesign/";
           show("Thanks for submitting your enquiry! I will be in touch with you shortly.", false);
         })
         .catch(function () {
-          show("Sorry, your message could not be sent just now. Please try again in a moment, or message @lilyzdesign on Instagram.", true);
+          show("Sorry, your message could not be sent just now. Please try again in a moment, or email lilyz.design23@gmail.com.", true);
         })
         .then(function () {
           sending = false;
