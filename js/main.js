@@ -50,6 +50,14 @@
     items.forEach(function (el) { el.classList.add("is-in"); });
   }
 
+  // "Email me" links open a blank email addressed to Lily. The address is put together here,
+  // in the browser, so it is not written out anywhere in the pages for spam robots to collect.
+  var mailTo = ["lilyz.design23", "gmail.com"].join("@");
+  document.querySelectorAll("[data-mail]").forEach(function (link) {
+    link.setAttribute("href", "mailto:" + mailTo);
+    link.removeAttribute("target");
+  });
+
   // Homepage showcase: a fan of photos that turns on its own.
   // A click on a side photo, or a swipe, also brings the next one forward.
   var deck = document.querySelector("[data-deck]");
@@ -157,7 +165,7 @@
           show("Thanks for submitting your enquiry! I will be in touch with you shortly.", false);
         })
         .catch(function () {
-          show("Sorry, your message could not be sent just now. Please try again in a moment, or email lilyz.design23@gmail.com.", true);
+          show("Sorry, your message could not be sent just now. Please try again in a moment, or use the Email me button below.", true);
         })
         .then(function () {
           sending = false;
