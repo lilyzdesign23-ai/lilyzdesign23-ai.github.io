@@ -336,6 +336,21 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
   .card__body { grid-template-columns: 1fr; }
 }
 
+/* Link out to the full portfolio on Behance, under the project grid */
+.more-work {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px;
+  margin-top: clamp(56px, 8vw, 110px); padding: clamp(28px, 4.5vw, 60px);
+  background: var(--mist); border-radius: 8px;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.more-work > div { flex: 1 1 340px; max-width: 40em; }
+.more-work h2 { margin-bottom: 0.4em; }
+.more-work p { margin: 0; color: var(--muted); }
+.more-work .btn { flex-shrink: 0; }
+.more-work:hover { transform: translateY(-3px); box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.35); }
+.more-work:hover .btn { background: transparent; color: var(--green); }
+.more-work:hover .arrow { transform: translateX(4px); }
+
 /* ---------- process ---------- */
 
 .process { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-light); }
