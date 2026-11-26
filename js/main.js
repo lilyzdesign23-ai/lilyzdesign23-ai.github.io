@@ -51,14 +51,11 @@ var INSTAGRAM_URL = "https://www.instagram.com/lilyzdesign/";
     items.forEach(function (el) { el.classList.add("is-in"); });
   }
 
-  // Homepage showcase: a fan of project cards that turns on its own,
-  // on the arrows, on a click of a side card, or on a swipe.
+  // Homepage showcase: a fan of photos that turns on its own.
+  // A click on a side photo, or a swipe, also brings the next one forward.
   var deck = document.querySelector("[data-deck]");
   if (deck) {
     var cards = Array.prototype.slice.call(deck.querySelectorAll(".deck__card"));
-    var caption = deck.querySelector(".deck__caption");
-    var meta = deck.querySelector(".deck__meta");
-    var name = deck.querySelector(".deck__name");
     var count = cards.length;
     var active = 0;
     var timer = null;
@@ -69,44 +66,26 @@ var INSTAGRAM_URL = "https://www.instagram.com/lilyzdesign/";
         var pos = ((i - active) % count + count) % count;
         if (pos > count / 2) pos -= count;
         card.setAttribute("data-pos", pos);
-        card.tabIndex = pos === 0 ? 0 : -1;
-        card.setAttribute("aria-hidden", pos === 0 ? "false" : "true");
       });
-      var front = cards[active];
-      meta.textContent = front.getAttribute("data-meta");
-      name.textContent = front.getAttribute("data-name");
-      caption.href = front.href;
     }
     function go(index) { active = ((index % count) + count) % count; layout(); }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function play() {
-      stop();
-      if (!calm && !document.hidden) timer = setInterval(function () { go(active + 1); }, 4200);
+      if (timer) { clearInterval(timer); timer = null; }
+      if (!calm && !document.hidden) timer = setInterval(function () { go(active + 1); }, 3800);
     }
 
     cards.forEach(function (card, i) {
-      card.addEventListener("click", function (e) {
-        // A side card comes to the front first; only the front card opens its project.
-        if (i !== active) { e.preventDefault(); go(i); play(); }
-      });
+      card.addEventListener("click", function () { if (i !== active) { go(i); play(); } });
     });
-    deck.querySelector("[data-deck-prev]").addEventListener("click", function () { go(active - 1); play(); });
-    deck.querySelector("[data-deck-next]").addEventListener("click", function () { go(active + 1); play(); });
-
-    deck.addEventListener("mouseenter", stop);
-    deck.addEventListener("mouseleave", play);
-    deck.addEventListener("focusin", stop);
-    deck.addEventListener("focusout", play);
     document.addEventListener("visibilitychange", play);
 
     var startX = null;
-    deck.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; stop(); }, { passive: true });
+    deck.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
     deck.addEventListener("touchend", function (e) {
       if (startX === null) return;
       var dx = e.changedTouches[0].clientX - startX;
       startX = null;
-      if (Math.abs(dx) > 40) go(active + (dx < 0 ? 1 : -1));
-      play();
+      if (Math.abs(dx) > 40) { go(active + (dx < 0 ? 1 : -1)); play(); }
     }, { passive: true });
 
     layout();

@@ -219,21 +219,10 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 .deck__perch { z-index: 6; pointer-events: none; }
 .deck__perch .birdie { position: absolute; left: 8%; bottom: 100%; margin-bottom: -3.2%; width: 17%; }
 
-.deck__bar { display: flex; align-items: center; justify-content: center; gap: clamp(14px, 3vw, 32px); margin-top: 6px; }
-.deck__nav {
-  width: 46px; height: 46px; flex-shrink: 0; border-radius: 50%;
-  border: 1px solid var(--green); background: transparent; color: var(--green);
-  font: 400 1.1rem/1 var(--sans); cursor: pointer; transition: background 0.25s, color 0.25s;
-}
-.deck__nav:hover { background: var(--green); color: var(--mist); }
-.deck__caption { text-align: center; min-width: min(15em, 52vw); }
-.deck__meta { display: block; text-transform: uppercase; }
-.deck__name {
-  display: inline-block; margin-top: 4px;
-  font-family: var(--serif); font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); line-height: 1.15;
-  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat; transition: background-size 0.3s;
-}
-.deck__caption:hover .deck__name { background-size: 100% 1px; }
+/* With four photos, the one opposite the front waits out of sight behind it */
+.deck--photos .deck__card[data-pos="2"], .deck--photos .deck__card[data-pos="-2"] { --x: 0%; --r: 0deg; --s: 0.72; --z: 1; --o: 0; }
+.deck--photos .deck__card[data-pos="0"] { cursor: default; }
+.deck--photos .deck__stage { aspect-ratio: 1 / 0.8; }
 
 /* Lily's bird, used as a small illustration */
 .birdie { display: block; height: auto; }
