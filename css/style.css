@@ -364,13 +364,21 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 /* ---------- client reviews ---------- */
 
 .reviews { background: var(--blush); }
-.reviews__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 32px); align-items: start; }
+.reviews .section-head { margin-bottom: clamp(28px, 4vw, 52px); }
+/* The reviews glide past in a continuous row; hovering or touching pauses them. */
+.reviews__scroller { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.reviews__track { display: flex; width: max-content; animation: reviews-glide 48s linear infinite; }
+.reviews__scroller:hover .reviews__track, .reviews__scroller:active .reviews__track { animation-play-state: paused; }
+.reviews__group { display: flex; align-items: stretch; flex-shrink: 0; }
+.reviews__group .review { width: min(460px, 82vw); margin-right: clamp(16px, 2vw, 28px); display: flex; flex-direction: column; }
+.reviews__group .review figcaption { margin-top: auto; }
+.reviews__group .review blockquote { margin-bottom: 20px; }
+@keyframes reviews-glide { to { transform: translateX(-50%); } }
 .review { margin: 0; background: var(--mist); border-radius: 8px; padding: clamp(24px, 3vw, 40px); position: relative; }
 .review__mark { display: block; font-family: var(--accent); font-size: 4.2rem; line-height: 0.7; height: 0.5em; color: var(--green); opacity: 0.35; }
 .review blockquote { margin: 14px 0 0; }
 .review blockquote p { font-size: 1.02em; line-height: 1.7; }
 .review figcaption { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; }
-@media (max-width: 760px) { .reviews__grid { grid-template-columns: 1fr; } }
 
 /* ---------- process ---------- */
 
@@ -540,6 +548,9 @@ fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
 .js .reveal.is-in { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
+  .reviews__track { animation: none; }
+  .reviews__scroller { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .reviews__group[aria-hidden="true"] { display: none; }
   .deck__card { transition: none; }
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
