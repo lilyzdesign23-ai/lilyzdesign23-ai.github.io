@@ -52,7 +52,7 @@
 
   // "Email me" links open a blank email addressed to Lily. The address is put together here,
   // in the browser, so it is not written out anywhere in the pages for spam robots to collect.
-  var mailTo = ["lilyz.design23", "gmail.com"].join("@");
+  var mailTo = ["inquiry", "lilyzdesignstudio.com"].join("@");
   document.querySelectorAll("[data-mail]").forEach(function (link) {
     link.setAttribute("href", "mailto:" + mailTo);
     link.removeAttribute("target");
