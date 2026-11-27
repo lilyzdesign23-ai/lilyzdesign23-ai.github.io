@@ -584,6 +584,21 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 .legal__block p { color: var(--muted); }
 .legal > p { margin-top: 12px; }
 
+/* ---------- featured work ---------- */
+
+.features { display: grid; gap: clamp(48px, 7vw, 110px); }
+.feature { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(28px, 6vw, 96px); align-items: center; }
+.feature:nth-child(even) .feature__media { order: 2; }
+.feature__media { display: block; aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden; background: var(--paper-deep); }
+.feature__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.feature__media:hover img { transform: scale(1.04); }
+.feature__body .lede { margin-top: 0.9em; }
+.feature__links { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; margin-top: 30px; }
+.feature-badge { display: inline-block; margin-top: 26px; transition: transform 0.25s; }
+.feature-badge img { display: block; width: min(300px, 100%); height: auto; }
+.feature-badge:hover { transform: translateY(-2px); }
+@media (max-width: 860px) { .feature { grid-template-columns: 1fr; } .feature:nth-child(even) .feature__media { order: 0; } }
+
 /* ---------- inquire ---------- */
 
 .inquire__grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 7vw, 110px); padding-bottom: var(--section); }
