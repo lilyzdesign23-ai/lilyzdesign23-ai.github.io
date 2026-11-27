@@ -218,10 +218,8 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 
 /* The bird sits on the top edge of the front card */
 .deck__perch { z-index: 6; pointer-events: none; }
-/* The walker carries the bird along the card edge. It moves with transforms only,
-   which the browser can animate without re-laying-out the page. */
-.deck__walker { position: absolute; left: 8%; bottom: 100%; margin-bottom: -3.2%; width: 17%; pointer-events: none; animation: bird-walk 18s linear infinite; }
-.deck__walker:hover { animation-play-state: paused; }
+/* Where the bird sits on the front card */
+.deck__walker { position: absolute; left: 8%; bottom: 100%; margin-bottom: -3.2%; width: 17%; pointer-events: none; }
 .deck__perch .birdie { width: 100%; }
 
 .deck__caption { display: block; text-align: center; margin-top: 4px; }
@@ -239,13 +237,11 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 .birdie--cta { width: 62px; margin: 0 auto 18px; }
 .more-work { position: relative; }
 
-/* The bird is alive: it hops, looks around, walks along the top of the header card,
+/* The bird is alive: it hops, looks around,
    sings when the mouse comes near, and flies off and back when clicked. */
 .birdie { cursor: pointer; pointer-events: auto; transform-origin: 50% 100%; -webkit-tap-highlight-color: transparent;
   animation: bird-hop 2.6s ease-in-out infinite, bird-look 9s steps(1) infinite; }
-.deck__perch .birdie { animation: bird-hop 1.3s ease-in-out infinite; }
 .birdie:hover { animation-duration: 0.5s, 9s; }
-.deck__perch .birdie:hover { animation-duration: 0.5s; }
 @keyframes bird-hop {
   0%, 38%, 100% { translate: 0 0; rotate: 0deg; }
   12% { translate: 0 -16%; rotate: -5deg; }
@@ -254,14 +250,6 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 }
 /* Turn round now and then (the drawing faces right; a negative scale faces it left) */
 @keyframes bird-look { 0%, 46% { scale: 1 1; } 47%, 68% { scale: -1 1; } 69%, 100% { scale: 1 1; } }
-/* Walk to the far end of the card, pause, turn, and walk back */
-@keyframes bird-walk {
-  0%, 12% { translate: 0 0; scale: 1 1; }
-  42%, 54.9% { translate: 353% 0; scale: 1 1; }
-  55%, 58% { translate: 353% 0; scale: -1 1; }
-  88%, 99.9% { translate: 0 0; scale: -1 1; }
-  100% { translate: 0 0; scale: 1 1; }
-}
 .birdie.is-flying { animation: bird-fly 2.6s ease-in-out 1 !important; }
 @keyframes bird-fly {
   0% { translate: 0 0; rotate: 0deg; opacity: 1; }
@@ -457,10 +445,18 @@ a:hover > .link .arrow, .link:hover .arrow { transform: translateX(4px); }
 /* ---------- about ---------- */
 
 .about__grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 7vw, 110px); align-items: center; }
-.portrait { margin: 0; aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden; background: var(--paper-deep); }
-.portrait img { width: 100%; height: 100%; object-fit: cover; }
-.about__studio { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
-.about__studio img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; }
+/* Three photos in one frame, gliding sideways from one to the next. The fourth image is a
+   copy of the first, so the loop starts again without a jump. */
+.about__slides { aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden; background: var(--paper-deep); }
+.about__track { display: flex; width: 400%; height: 100%; animation: about-slide 21s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+.about__track img { width: 25%; height: 100%; object-fit: cover; flex-shrink: 0; }
+.about__slides:hover .about__track { animation-play-state: paused; }
+@keyframes about-slide {
+  0%, 27% { transform: translateX(0); }
+  33.3%, 60% { transform: translateX(-25%); }
+  66.6%, 93% { transform: translateX(-50%); }
+  100% { transform: translateX(-75%); }
+}
 .about, .faq { background: var(--mist); }
 .faq { padding-top: 0; }
 .submark { height: 72px; width: auto; margin-bottom: 22px; }
@@ -639,7 +635,7 @@ fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
   .birdie, .deck__perch .birdie { animation: none; }
   .reviews__track { animation: none; }
   .reviews__scroller { overflow-x: auto; }
-  .deck__walker { animation: none; }
+  .about__track { animation: none; }
   .reviews__group[aria-hidden="true"] { display: none; }
   .deck__card { transition: none; }
   html { scroll-behavior: auto; }
