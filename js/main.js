@@ -58,8 +58,8 @@
     link.removeAttribute("target");
   });
 
-  // Homepage showcase: a fan of photos that turns on its own.
-  // A click on a side photo, or a swipe, also brings the next one forward.
+  // Homepage showcase: a fan of project cards that turns on its own.
+  // A click on a side card, or a swipe, also brings the next one forward.
   var deck = document.querySelector("[data-deck]");
   if (deck) {
     var cards = Array.prototype.slice.call(deck.querySelectorAll(".deck__card"));
@@ -73,7 +73,15 @@
         var pos = ((i - active) % count + count) % count;
         if (pos > count / 2) pos -= count;
         card.setAttribute("data-pos", pos);
+        card.tabIndex = pos === 0 ? 0 : -1;
       });
+      var caption = deck.querySelector(".deck__caption");
+      if (caption) {
+        var front = cards[active];
+        caption.href = front.href;
+        caption.querySelector(".deck__meta").textContent = front.getAttribute("data-meta");
+        caption.querySelector(".deck__name").textContent = front.getAttribute("data-name");
+      }
     }
     function go(index) { active = ((index % count) + count) % count; layout(); }
     function play() {
@@ -82,7 +90,10 @@
     }
 
     cards.forEach(function (card, i) {
-      card.addEventListener("click", function () { if (i !== active) { go(i); play(); } });
+      card.addEventListener("click", function (e) {
+        // A side card comes to the front first; only the front card opens its project.
+        if (i !== active) { e.preventDefault(); go(i); play(); }
+      });
     });
     document.addEventListener("visibilitychange", play);
 
