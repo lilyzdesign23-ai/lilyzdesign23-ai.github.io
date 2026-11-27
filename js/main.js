@@ -110,6 +110,45 @@
     play();
   }
 
+  // The bird: it sings a few notes when the mouse comes near, and flies off and back on a click or tap.
+  var notes = ["♪", "♫", "♪", "♬"];
+  var lastNote = 0;
+  function sing(bird, count) {
+    var now = Date.now();
+    if (now - lastNote < 500) return;
+    lastNote = now;
+    var box = bird.getBoundingClientRect();
+    var onDark = !!bird.closest(".on-dark");
+    for (var k = 0; k < count; k++) {
+      (function (k) {
+        setTimeout(function () {
+          var note = document.createElement("span");
+          note.className = "bird-note" + (onDark ? " bird-note--light" : "");
+          note.textContent = notes[(Math.random() * notes.length) | 0];
+          note.style.left = box.left + box.width * (0.55 + Math.random() * 0.4) + "px";
+          note.style.top = box.top - 6 + "px";
+          note.style.setProperty("--drift", (Math.random() * 36 - 6).toFixed(0) + "px");
+          document.body.appendChild(note);
+          note.addEventListener("animationend", function () { note.remove(); });
+        }, k * 180);
+      })(k);
+    }
+  }
+  document.querySelectorAll(".birdie").forEach(function (bird) {
+    bird.addEventListener("mouseenter", function () { sing(bird, 2); });
+    bird.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (bird.classList.contains("is-flying")) return;
+      lastNote = 0;
+      sing(bird, 3);
+      bird.classList.add("is-flying");
+    });
+    bird.addEventListener("animationend", function (e) {
+      if (e.animationName === "bird-fly") bird.classList.remove("is-flying");
+    });
+  });
+
   // Inquiry form
   var form = document.querySelector("#inquiry-form");
   if (form) {
